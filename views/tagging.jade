@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  script(type='text/javascript', src='/js/jquery-2.2.3.js')
+  
   form(method='post', action='http://localhost:3000/users/messages/peter', id='messageForm')
     p
       label latitude: 
@@ -16,4 +18,5 @@ block content
       input(name='hashtag', class='hashtagInput', type='text')
     p
       button(type='submit', value='OK') OK
-    script(type='text/javascript', src='/javascripts/hello.js')
+  p
+    button(id='btnInit') Find my location
