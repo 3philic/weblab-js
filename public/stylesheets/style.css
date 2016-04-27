@@ -39,7 +39,9 @@ ul.list {
   display: block;
 }
 li.list {
+  float: none;
   background-color: #fff;
+  color: #82C2D6;
   padding: 8px;
   display: block;
 }
@@ -48,7 +50,4 @@ ul.list li.list {
   padding: 8px;
   display: block;
   margin: 5px;
-}
-a.list {
-  padding: 8px;
 }
