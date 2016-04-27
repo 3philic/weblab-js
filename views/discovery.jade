@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  ul 
+    for loc in locations
+      p
+        h1= loc.name
+        li= "Latitue = "    + loc.lat
+        li= "Longitude = "  + loc.long
+        li= "Hash = "       + loc.hash
