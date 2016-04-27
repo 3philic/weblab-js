@@ -1,10 +1,22 @@
 extends layout
 
 block content
+  h1= title
+   form(name="search-Location", action="/")
+       div.input
+        p
+           span.label Search
+           p
+            input(type="text", name="title")
+            input(type="submit", value="search")
+       div.actions
+           
   ul 
     for loc in locations
       p
         h1= loc.name
-        li= "Latitue = "    + loc.lat
+        li= "Latitude = "    + loc.lat
         li= "Longitude = "  + loc.long
         li= "Hash = "       + loc.hash
+        
+        
