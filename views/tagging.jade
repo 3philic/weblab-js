@@ -4,13 +4,13 @@ block content
   script(type='text/javascript', src='/js/jquery-2.2.3.js')
   script(type='text/javascript', src='/javascripts/tagging-view-geolocation.js')
   
-  form(method='post', action='http://localhost:3000/users/messages/peter', id='messageForm')
+  form(method='post', id='messageForm')
     p
       label latitude: 
       input#inputLatitude(name='latitude', class='latitudeInput', type='text')
-    p
-      label longitude: 
+      label  longitude: 
       input#inputLongitude(name='longitude', class='longitudeInput', type='text')
+      button(id='btnInit') Find my location
     p
       label name: 
       input#inputName(name='name', class='nameInput', type='text')
@@ -18,6 +18,4 @@ block content
       label hashtag: 
       input#inputHashtag(name='hashtag', class='hashtagInput', type='text')
     p
-      button(type='submit', value='OK') OK
-  p
-    button(id='btnInit') Find my location
+      button(type='submit', value='Submit') Submit
