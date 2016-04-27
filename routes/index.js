@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var locs;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -39,6 +40,7 @@ router.get('/discovery', function(req, res, next) {
              name : 'iwi',
              hash : '#edu'
 }] };
+  locs = options[2];
     res.render('discovery', options);
 });
 

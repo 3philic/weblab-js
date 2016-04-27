@@ -1,10 +1,26 @@
 extends layout
 
 block content
+  script.
+    function something() {
+      
+    }
+  h1= title
+   form(name="search-Location", action="/discovery")
+       div.input
+        p
+           span.label Search
+           p
+            input(type="text", name="title")
+            button(onclick="something()") Search
+       div.actions
+           
   ul 
     for loc in locations
       p
         h1= loc.name
-        li= "Latitue = "    + loc.lat
+        li= "Latitude = "    + loc.lat
         li= "Longitude = "  + loc.long
         li= "Hash = "       + loc.hash
+        
+        
