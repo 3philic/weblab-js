@@ -17,7 +17,12 @@ router.get('/tagging', function(req, res, next) {
 });
 /* POST tagging page. */
 router.post('/tagging', function(req, res) {
+  console.log(req.body);
 
+  var options = {
+       title : 'Geo Location Tagging'
+  };
+  res.status(200).send('OK');
 });
 /* GET discovery page. */
 router.get('/discovery', function(req, res, next) {

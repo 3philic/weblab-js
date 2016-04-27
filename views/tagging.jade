@@ -4,7 +4,7 @@ block content
   script(type='text/javascript', src='/js/jquery-2.2.3.js')
   script(type='text/javascript', src='/javascripts/tagging-view-geolocation.js')
   
-  form(method='post', id='messageForm')
+  form#locationForm(method='post')
     p
       label latitude: 
       input#inputLatitude(name='latitude', class='latitudeInput', type='text')
@@ -17,5 +17,5 @@ block content
     p
       label hashtag: 
       input#inputHashtag(name='hashtag', class='hashtagInput', type='text')
-    p
-      button(type='submit', value='Submit') Submit
+  p
+    button#btnSubmit Submit
