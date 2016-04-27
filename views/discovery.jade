@@ -15,12 +15,14 @@ block content
             button(onclick="something()") Search
        div.actions
            
-  ul 
-    for loc in locations
-      p
-        h1= loc.name
-        li= "Latitude = "    + loc.lat
-        li= "Longitude = "  + loc.long
-        li= "Hash = "       + loc.hash
+    div.list
+      ul.list 
+        for loc in locations
+          p.list
+            h1= loc.name
+            a.list= "Latitude = "    + loc.lat
+            a.list= "Longitude = "  + loc.long
+            a.list= "Hash = "       + loc.hash
+          p.list
         
         

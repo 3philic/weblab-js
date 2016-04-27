@@ -3,12 +3,13 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+body
+    ul.nav
+      li 
+        a(href='/') Home
+      li
+        a(href='/discovery') Discovery
+      li
+        a(href='/tagging') Tagging
     block content
-    p
-      p 
-      a(href='/') home
-      p
-      a(href='/discovery') discovery
-      p
-      a(href='/tagging') tagging
+    

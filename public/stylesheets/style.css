@@ -6,3 +6,49 @@ body {
 a {
   color: #00B7FF;
 }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+ul.list {
+  list-style: armenian;
+  list-style-type: disc;
+  list-style-position: inside;
+  padding: 20px;
+  background-color: #fff;
+  overflow: auto;
+  display: block;
+}
+li.list {
+  background-color: #fff;
+  padding: 8px;
+  display: block;
+}
+ul.list li.list {
+  background-color: #fff;
+  padding: 8px;
+  display: block;
+  margin: 5px;
+}
+a.list {
+  padding: 8px;
+}
