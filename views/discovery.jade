@@ -1,14 +1,18 @@
 extends layout
 
 block content
+  script.
+    function something() {
+      
+    }
   h1= title
-   form(name="search-Location", action="/")
+   form(name="search-Location", action="/discovery")
        div.input
         p
            span.label Search
            p
             input(type="text", name="title")
-            input(type="submit", value="search")
+            button(onclick="something()") Search
        div.actions
            
   ul 
