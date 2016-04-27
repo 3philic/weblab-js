@@ -16,6 +16,10 @@ router.get('/tagging', function(req, res, next) {
     };
     res.render('tagging', options);
 });
+/* POST tagging page. */
+router.post('/tagging', function(req, res) {
+
+});
 /* GET discovery page. */
 router.get('/discovery', function(req, res, next) {
     var options = {
