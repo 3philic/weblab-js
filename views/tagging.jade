@@ -2,20 +2,21 @@ extends layout
 
 block content
   script(type='text/javascript', src='/js/jquery-2.2.3.js')
+  script(type='text/javascript', src='/javascripts/tagging-view-geolocation.js')
   
   form(method='post', action='http://localhost:3000/users/messages/peter', id='messageForm')
     p
       label latitude: 
-      input(name='latitude', class='latitudeInput', type='text')
+      input#inputLatitude(name='latitude', class='latitudeInput', type='text')
     p
       label longitude: 
-      input(name='longitude', class='longitudeInput', type='text')
+      input#inputLongitude(name='longitude', class='longitudeInput', type='text')
     p
       label name: 
-      input(name='name', class='nameInput', type='text')
+      input#inputName(name='name', class='nameInput', type='text')
     p
       label hashtag: 
-      input(name='hashtag', class='hashtagInput', type='text')
+      input#inputHashtag(name='hashtag', class='hashtagInput', type='text')
     p
       button(type='submit', value='OK') OK
   p
