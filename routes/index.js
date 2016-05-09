@@ -12,9 +12,13 @@ function showTagging(req, res) {
   res.render('tagging', options);
 }
 
+var createDemoLocationsDoOnce = false;
 function createDemoLocations(req, res, next) {
-  locationRepository.createLocation(49.013790, 8.404435, 'castle', '#sight');
-  locationRepository.createLocation(49.013790, 8.390071, 'iwi', '#edu');
+  if (!createDemoLocationsDoOnce) {
+    locationRepository.createLocation(49.013790, 8.404435, 'castle', '#sight');
+    locationRepository.createLocation(49.013790, 8.390071, 'iwi', '#edu');
+    createDemoLocationsDoOnce = true;
+  }
   next();
 }
 
