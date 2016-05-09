@@ -5,11 +5,53 @@ var locs;
 var locationRepository = require('./locationRepository');
 
 // Middlewares
-function showTagging(req, res, next) {
+function showTagging(req, res) {
   var options = {
        title : 'Geo Location Tagging'
   };
   res.render('tagging', options);
+}
+
+function createDemoLocations(req, res, next) {
+  locationRepository.createLocation(49.013790, 8.404435, 'castle', '#sight');
+  locationRepository.createLocation(49.013790, 8.390071, 'iwi', '#edu');
+  next();
+}
+
+function getLocations(req, res, next) {
+  var searchName = req.query.name;
+
+  if (!searchName) {
+    searchName = "";
+  }
+
+  var allLocations = locationRepository.getLocations();
+  var relevantLocations = [];
+
+  // aquire locations with matching names to search term
+  for (var i = 0; i < allLocations.length; i++) {
+     if (allLocations[i].name.toLowerCase().indexOf(searchName) > -1) {
+         relevantLocations.push(allLocations[i]);
+       }
+  }
+  // aquire locations with matching hashtags to search term
+  for (var i = 0; i < allLocations.length; i++) {
+     if (allLocations[i].hash.toLowerCase().indexOf(searchName) > -1) {
+         // check if the location has already been added to the relevantLocations
+         var relevantLocationsContainsLocation = false;
+         for (var j = 0; j < relevantLocations.length; j++) {
+           if (allLocations[i].id == relevantLocations[j].id) {
+             relevantLocationsContainsLocation = true;
+           }
+         }
+         if (!relevantLocationsContainsLocation) {
+           relevantLocations.push(allLocations[i]);
+         }
+       }
+  }
+
+  req.locations = relevantLocations;
+  next();
 }
 
 /* GET home page. */
@@ -30,14 +72,12 @@ router.post('/tagging', function(req, res, next) {
   next();
 }, showTagging);
 /* GET discovery page. */
-router.get('/discovery', function(req, res, next) {
-  locationRepository.createLocation(49.013790, 8.404435, 'castle', '#sight');
-  locationRepository.createLocation(49.013790, 8.390071, 'iwi', '#edu');
+router.get('/discovery', createDemoLocations, getLocations, function(req, res, next) {
 
   var options = {
         title : 'Geo Location Discovery',
-        locations : locationRepository.getLocations() };
-  locs = options[2];
+        locations : req.locations };
+    locs = options[2];
     res.render('discovery', options);
 });
 
