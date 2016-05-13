@@ -4,11 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var redis = require('redis');
+var client = redis.createClient();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+client.on('connect', function(){
+  console.log('connected');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
