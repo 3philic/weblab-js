@@ -92,20 +92,19 @@ router.get('/discovery', createDemoLocations, getLocations, function(req, res, n
 
 //REDIS
 
-client.on('connect', function(){
-  console.log('connected');
+client.on('connect', function() {
+    console.log('connected');
 });
 
-exports.save = function(key, value, callback) {
-  console.log("function save has been called");
+exports.save = function (key, value, callback) {
     function saveIfNew(err, exists) {
         if (!err && !exists) {
             client.multi().set(key, JSON.stringify(value)).zadd("index", "1", key).exec(function(err, results) {
-                    callback(err, results)
-                    console.log("okay");
-                });
-        } else
+                callback(err, results)
+            });
+        } else {
             callback(err, exists);
+        }
     }
     client.exists(key, saveIfNew);
 };
@@ -115,7 +114,7 @@ function get(key, callback) {
         if (err)
             callback(err, null);
         else
-        callback(null, JSON.parse(res));
+            callback(null, JSON.parse(res));
     });
 };
 
