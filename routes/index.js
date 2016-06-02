@@ -18,11 +18,15 @@ var createDemoLocationsDoOnce = false;
 
 function createDemoLocations(req, res, next) {
     if (!createDemoLocationsDoOnce) {
-        locationRepository.createLocation(49.013790, 8.404435, 'castle', '#sight');
-        locationRepository.createLocation(49.013790, 8.390071, 'iwi', '#edu');
-        createDemoLocationsDoOnce = true;
+        locationRepository.createLocation(49.013790, 8.404435, 'castle', '#sight', function (err, result) {
+          // locationRepository.createLocation(49.013790, 8.390071, 'iwi', '#edu');
+          createDemoLocationsDoOnce = true;
+
+          next();
+        });
+    } else {
+      next();
     }
-    next();
 }
 
 function getLocations(req, res, next) {
@@ -32,33 +36,36 @@ function getLocations(req, res, next) {
         searchName = "";
     }
 
-    var allLocations = locationRepository.getLocations();
-    var relevantLocations = [];
+    locationRepository.getLocations(function (err, result) {
+      var allLocations = result;
+      var relevantLocations = [];
 
-    // aquire locations with matching names to search term
-    for (var i = 0; i < allLocations.length; i++) {
-        if (allLocations[i].name.toLowerCase().indexOf(searchName) > -1) {
-            relevantLocations.push(allLocations[i]);
-        }
-    }
-    // aquire locations with matching hashtags to search term
-    for (var i = 0; i < allLocations.length; i++) {
-        if (allLocations[i].hash.toLowerCase().indexOf(searchName) > -1) {
-            // check if the location has already been added to the relevantLocations
-            var relevantLocationsContainsLocation = false;
-            for (var j = 0; j < relevantLocations.length; j++) {
-                if (allLocations[i].id == relevantLocations[j].id) {
-                    relevantLocationsContainsLocation = true;
-                }
-            }
-            if (!relevantLocationsContainsLocation) {
-                relevantLocations.push(allLocations[i]);
-            }
-        }
-    }
+      // aquire locations with matching names to search term
+      for (var i = 0; i < allLocations.length; i++) {
+          if (allLocations[i].name.toLowerCase().indexOf(searchName) > -1) {
+              relevantLocations.push(allLocations[i]);
+          }
+      }
+      // aquire locations with matching hashtags to search term
+      for (var i = 0; i < allLocations.length; i++) {
+          if (allLocations[i].hash.toLowerCase().indexOf(searchName) > -1) {
+              // check if the location has already been added to the relevantLocations
+              var relevantLocationsContainsLocation = false;
+              for (var j = 0; j < relevantLocations.length; j++) {
+                  if (allLocations[i].id == relevantLocations[j].id) {
+                      relevantLocationsContainsLocation = true;
+                  }
+              }
+              if (!relevantLocationsContainsLocation) {
+                  relevantLocations.push(allLocations[i]);
+              }
+          }
+      }
 
-    req.locations = relevantLocations;
-    next();
+      req.locations = relevantLocations;
+      next();
+    });
+
 }
 
 /* GET home page. */
@@ -74,9 +81,9 @@ router.get('/tagging', showTagging);
 router.post('/tagging', function(req, res, next) {
     console.log(req.body);
     locationRepository.createLocation(req.body['latitude'], req.body['longitude'],
-        req.body['name'], req.body['hashtag']);
-
-    next();
+        req.body['name'], req.body['hashtag'], function (err, result) {
+          next();
+        });
 }, showTagging);
 /* GET discovery page. */
 router.get('/discovery', createDemoLocations, getLocations, function(req, res, next) {
@@ -93,13 +100,15 @@ router.get('/discovery', createDemoLocations, getLocations, function(req, res, n
 //REDIS
 
 client.on('connect', function() {
-    console.log('connected');
+    console.log('Redis client: connected');
 });
 
-exports.save = function (key, value, callback) {
+exports.saveJSON = function (key, value, callback) {
     function saveIfNew(err, exists) {
         if (!err && !exists) {
-            client.multi().set(key, JSON.stringify(value)).zadd("index", "1", key).exec(function(err, results) {
+            client.multi()
+            .set(key, JSON.stringify(value))
+            .exec(function(err, results) {
                 callback(err, results)
             });
         } else {
@@ -109,7 +118,7 @@ exports.save = function (key, value, callback) {
     client.exists(key, saveIfNew);
 };
 
-function get(key, callback) {
+exports.getJSON = function (key, callback) {
     client.get(key, function(err, res) {
         if (err)
             callback(err, null);
@@ -118,5 +127,21 @@ function get(key, callback) {
     });
 };
 
+exports.getSortedListEntries = function (key, rangeStart, rangeEnd, callback) {
+    client.zrange(key, rangeStart, rangeEnd, function(err, res) {
+        if (err)
+            callback(err, null);
+        else
+            callback(null, res);
+    });
+};
+
+exports.setSortedListEntry = function (key, score, value, callback) {
+  client.multi()
+  .zadd(key, score, value)
+  .exec(function(err, results) {
+      callback(err, results)
+  });
+}
 
 module.exports = router;
