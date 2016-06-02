@@ -1,14 +1,109 @@
 #%RAML 0.8
 title: weblab
 version: v1
-baseUri: http://samplehost.com/api
-/helloWorld:
+baseUri: http://localhost:3000/api
+/locations:
   get:
+    queryParameters:
+      name:
+        displayName: Search name
+        type: string
+        description: Filter for name
+        example: "Castle"
+        required: false
+      hashtagName:
+        displayName: Search HashtagName
+        type: string
+        description: Filter for name
+        example: "sight"
+        required: false
     responses:
       200:
         body:
           application/json:
-            example: |
+            example : |
               {
-                "message" : "Hello World"
+              "locations" :
+                [ {
+                "lat" : "1.0",
+                "long" : "1.0",
+                "name" : "Castle",
+                "hash" : "#sight",
+                "id" : "1"
+                },
+                {
+                "lat" : "1.0",
+                "long" : "1.0",
+                "name" : "Castle",
+                "hash" : "#sight",
+                "id" : "1"
+                }
+                ]
               }
+  post:
+    body:
+      application/json:
+        example : |
+          {
+          "location" :
+            {
+            "lat" : "1.0",
+            "long" : "1.0",
+            "name" : "Castle",
+            "hash" : "#sight",
+            "id" : "1"
+            }
+          }
+    responses:
+      201:
+        body:
+          application/json:
+            example : |
+              {
+              "location" :
+                {
+                "lat" : "1.0",
+                "long" : "1.0",
+                "name" : "Castle",
+                "hash" : "#sight",
+                "id" : "1"
+                }
+              }
+
+  /location-id:
+    delete:
+      responses:
+        204:
+
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example : |
+                {
+                "location" :
+                  {
+                  "lat" : "1.0",
+                  "long" : "1.0",
+                  "name" : "Castle",
+                  "hash" : "#sight",
+                  "id" : "1"
+                  }
+                }
+    put:
+      responses:
+        200:
+          body:
+            application/json:
+              example : |
+                {
+                "location" :
+                  {
+                  "lat" : "1.0",
+                  "long" : "1.0",
+                  "name" : "Castle",
+                  "hash" : "#sight",
+                  "id" : "1"
+                  }
+                }

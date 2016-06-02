@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 var redis = require('redis');
 var client = redis.createClient();
 var locs;
@@ -98,6 +99,10 @@ router.get('/discovery', createDemoLocations, getLocations, function(req, res, n
     };
     locs = options[2];
     res.render('discovery', options);
+});
+/* GET apidoc page. */
+router.get('/apidoc', function(req, res, next) {
+    res.sendFile(path.join(__dirname+'/../doc/Raml/api.html'));
 });
 
 
