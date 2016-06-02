@@ -31,9 +31,13 @@ function createDemoLocations(req, res, next) {
 
 function getLocations(req, res, next) {
     var searchName = req.query.name;
+    var searchHashtagName = req.query.hashtagName;
 
     if (!searchName) {
         searchName = "";
+    }
+    if (!searchHashtagName) {
+      searchHashtagName = searchName;
     }
 
     locationRepository.getLocations(function (err, result) {
@@ -48,7 +52,7 @@ function getLocations(req, res, next) {
       }
       // aquire locations with matching hashtags to search term
       for (var i = 0; i < allLocations.length; i++) {
-          if (allLocations[i].hash.toLowerCase().indexOf(searchName) > -1) {
+          if (allLocations[i].hash.toLowerCase().indexOf(searchHashtagName) > -1) {
               // check if the location has already been added to the relevantLocations
               var relevantLocationsContainsLocation = false;
               for (var j = 0; j < relevantLocations.length; j++) {
