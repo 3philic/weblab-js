@@ -171,8 +171,13 @@ router.delete('/api/locations/:id', function(req, res) {
 router.get('/api/locations/:id',function(req, res, next){
   var key = req.params.id;
   locationRepository.getLocation(key, function (err, result){
-    res.statusCode = 200;
-    res.send(result)
+    if (result != null) {
+      res.statusCode = 200;
+      res.send(result)
+    }else{
+      res.sendStatus(404);
+    }
+
   });
 });
 /* PUT /locations/location-id */
