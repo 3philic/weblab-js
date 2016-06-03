@@ -108,6 +108,23 @@ router.get('/apidoc', function(req, res, next) {
 //REST
 /* /locations */
 /* GET locations */
+router.get('/api/locations',function(req, res, next) {
+  next();
+}, getLocations, function (req, res, next) {
+    var locas = req.locations;
+    console.log(locas);
+    res.send(locas);
+}
+
+);
+
+router.get('/api/locations/:id',function(req, res, next){
+  var key = req.params.id;
+  console.log(key);
+  client.get(key, function (err, result) {
+      res.send(JSON.parse(result));
+  });
+});
 /* POST locations */
 
 /* /locations/location-id */
