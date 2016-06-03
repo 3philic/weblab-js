@@ -73,6 +73,28 @@ function getLocations(req, res, next) {
 
 }
 
+function validateRestLocationInput(req, res, next) {
+    var failed = false;
+    if (!req.body['lat']) {
+      failed = true;
+    }
+    if (!req.body['long']) {
+      failed = true;
+    }
+    if (!req.body['name']) {
+      failed = true;
+    }
+    if (!req.body['hash']) {
+      failed = true;
+    }
+
+    if (!failed) {
+      next();
+    } else {
+      res.send('Malformed input JSON');
+    }
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var options = {
@@ -109,11 +131,25 @@ router.get('/apidoc', function(req, res, next) {
 /* /locations */
 /* GET locations */
 /* POST locations */
+router.post('/api/locations', validateRestLocationInput, function(req, res) {
+  console.log(req.body);
+  locationRepository.createLocation(req.body['lat'], req.body['long'],
+      req.body['name'], req.body['hash'], function (err, result) {
+        if (!err) {
+          res.statusCode = 201;
+          res.send(result);
+        } else {
+          res.send('Not created.');
+        }
+      });
+});
 
 /* /locations/location-id */
 /* DELETE /locations/location-id */
+
 /* GET /locations/location-id */
 /* PUT /locations/location-id */
+
 
 //REDIS
 
@@ -145,8 +181,8 @@ exports.getJSON = function (key, callback) {
     });
 };
 
-exports.getSortedListEntries = function (key, rangeStart, rangeEnd, callback) {
-    client.zrange(key, rangeStart, rangeEnd, function(err, res) {
+exports.getString = function (key, callback) {
+    client.get(key, function(err, res) {
         if (err)
             callback(err, null);
         else
@@ -154,9 +190,9 @@ exports.getSortedListEntries = function (key, rangeStart, rangeEnd, callback) {
     });
 };
 
-exports.setSortedListEntry = function (key, score, value, callback) {
+exports.setString = function (key, value, callback) {
   client.multi()
-  .zadd(key, score, value)
+  .set(key, value)
   .exec(function(err, results) {
       callback(err, results)
   });

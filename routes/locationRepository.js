@@ -2,16 +2,16 @@ var route = require('./index');
 
 function incrementBeID (callback) {
   nextLocationBeID(function(err, res) {
-    route.setSortedListEntry("beID", "1", res+1, function(err, result) {
+    route.setString("beID", res+1, function(err, result) {
       callback(null, res+1);
     });
   });
 }
 
 nextLocationBeID = function(callback) {
-  route.getSortedListEntries("beID", "-1", "-1", function(err, result) {
-    if (result.length > 0) {
-      callback(null, parseInt(result[0], 10));
+  route.getString("beID", function(err, result) {
+    if (result) {
+      callback(null, parseInt(result, 10));
     } else {
       callback(null, 0);
     }
