@@ -155,6 +155,17 @@ router.post('/api/locations', validateRestLocationInput, function(req, res) {
 
 /* /locations/location-id */
 /* DELETE /locations/location-id */
+router.delete('/api/locations/:id', function(req, res) {
+  var id = req.params.id;
+  locationRepository.deleteLocation(id, function (err, result) {
+        if (!err && result == 1) {
+          res.sendStatus(204);
+        } else {
+          res.statusCode = 404;
+          res.send('Location at beID was not found.');
+        }
+      });
+});
 /* GET /locations/location-id */
 router.get('/api/locations/:id',function(req, res, next){
   var key = req.params.id;
@@ -172,8 +183,8 @@ router.put('/api/locations/:id', validateRestLocationInput, function(req, res) {
           res.statusCode = 200;
           res.send(result);
         } else {
-          res.statusCode = 410;
-          res.send('Location at beID was removed.');
+          res.statusCode = 404;
+          res.send('Location at beID was not found.');
         }
       });
 });
@@ -183,6 +194,14 @@ router.put('/api/locations/:id', validateRestLocationInput, function(req, res) {
 client.on('connect', function() {
     console.log('Redis client: connected');
 });
+
+exports.remove = function (key, callback) {
+  client.multi()
+  .del(key)
+  .exec(function(err, results) {
+      callback(err, results)
+  });
+};
 
 exports.saveJSON = function (key, value, callback) {
   client.multi()

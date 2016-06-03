@@ -101,3 +101,13 @@ exports.getLocation = function(id, callback) {
     }
   });
 }
+
+exports.deleteLocation = function(id, callback) {
+  route.remove("location_".concat(id), function(err, result) {
+    if (!err) {
+      callback(null, result);
+    } else {
+      callback(err, null);
+    }
+  });
+}
