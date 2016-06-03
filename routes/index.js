@@ -164,7 +164,19 @@ router.get('/api/locations/:id',function(req, res, next){
   });
 });
 /* PUT /locations/location-id */
-
+router.put('/api/locations/:id', validateRestLocationInput, function(req, res) {
+  var id = req.params.id;
+  locationRepository.replaceLocation(req.body['lat'], req.body['long'],
+      req.body['name'], req.body['hash'], id, function (err, result) {
+        if (!err && result) {
+          res.statusCode = 200;
+          res.send(result);
+        } else {
+          res.statusCode = 410;
+          res.send('Location at beID was removed.');
+        }
+      });
+});
 
 //REDIS
 
@@ -173,18 +185,11 @@ client.on('connect', function() {
 });
 
 exports.saveJSON = function (key, value, callback) {
-    function saveIfNew(err, exists) {
-        if (!err && !exists) {
-            client.multi()
-            .set(key, JSON.stringify(value))
-            .exec(function(err, results) {
-                callback(err, results)
-            });
-        } else {
-            callback(err, exists);
-        }
-    }
-    client.exists(key, saveIfNew);
+  client.multi()
+  .set(key, JSON.stringify(value))
+  .exec(function(err, results) {
+      callback(err, results)
+  });
 };
 
 exports.getJSON = function (key, callback) {

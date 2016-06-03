@@ -40,6 +40,36 @@ exports.createLocation = function(lat, long, name, hash, callback) {
   });
 }
 
+exports.replaceLocation = function(lat, long, name, hash, id, callback) {
+  // check if the location exists
+  this.getLocation(id, function(err, res) {
+    if (!err && res) {
+      var location = {
+          lat: lat,
+          long: long,
+          name: name,
+          hash: hash,
+          id: id
+      };
+      console.log("replace with location ".concat(JSON.stringify(location)));
+      route.saveJSON("location_".concat(id), location, function(saveErr, results) {
+        if (!saveErr) {
+          console.log("locationRepository: replaced location_".concat(id));
+          console.log("was location ".concat(JSON.stringify(res)));
+
+
+
+          callback(null, location);
+        } else {
+          callback(saveErr, null);
+        }
+      });
+    } else {
+      callback(err, null);
+    }
+  });
+}
+
 exports.getLocations = function(callback) {
   nextLocationBeID(function(err, nextLocationBeID) {
     var locations = [];
@@ -58,6 +88,16 @@ exports.getLocations = function(callback) {
           }
         });
       }
+    }
+  });
+}
+
+exports.getLocation = function(id, callback) {
+  route.getJSON("location_".concat(id), function(err, result) {
+    if (!err) {
+      callback(null, result);
+    } else {
+      callback(err, null);
     }
   });
 }
