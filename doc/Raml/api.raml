@@ -22,37 +22,30 @@ baseUri: http://localhost:3000/api
         body:
           application/json:
             example : |
+              [ {
+              "lat" : "1.0",
+              "long" : "1.0",
+              "name" : "Castle",
+              "hash" : "#sight",
+              "id" : "1"
+              },
               {
-              "locations" :
-                [ {
-                "lat" : "1.0",
-                "long" : "1.0",
-                "name" : "Castle",
-                "hash" : "#sight",
-                "id" : "1"
-                },
-                {
-                "lat" : "1.0",
-                "long" : "1.0",
-                "name" : "Castle",
-                "hash" : "#sight",
-                "id" : "1"
-                }
-                ]
+              "lat" : "1.0",
+              "long" : "1.0",
+              "name" : "Castle",
+              "hash" : "#sight",
+              "id" : "1"
               }
+              ]
   post:
     body:
       application/json:
         example : |
           {
-          "location" :
-            {
-            "lat" : "1.0",
-            "long" : "1.0",
-            "name" : "Castle",
-            "hash" : "#sight",
-            "id" : "1"
-            }
+          "lat" : "1.0",
+          "long" : "1.0",
+          "name" : "Castle",
+          "hash" : "#sight"
           }
     responses:
       201:
@@ -60,14 +53,11 @@ baseUri: http://localhost:3000/api
           application/json:
             example : |
               {
-              "location" :
-                {
-                "lat" : "1.0",
-                "long" : "1.0",
-                "name" : "Castle",
-                "hash" : "#sight",
-                "id" : "1"
-                }
+              "lat" : "1.0",
+              "long" : "1.0",
+              "name" : "Castle",
+              "hash" : "#sight",
+              "id" : "1"
               }
 
   /location-id:
@@ -82,14 +72,11 @@ baseUri: http://localhost:3000/api
             application/json:
               example : |
                 {
-                "location" :
-                  {
-                  "lat" : "1.0",
-                  "long" : "1.0",
-                  "name" : "Castle",
-                  "hash" : "#sight",
-                  "id" : "1"
-                  }
+                "lat" : "1.0",
+                "long" : "1.0",
+                "name" : "Castle",
+                "hash" : "#sight",
+                "id" : "1"
                 }
     put:
       responses:
@@ -98,12 +85,9 @@ baseUri: http://localhost:3000/api
             application/json:
               example : |
                 {
-                "location" :
-                  {
-                  "lat" : "1.0",
-                  "long" : "1.0",
-                  "name" : "Castle",
-                  "hash" : "#sight",
-                  "id" : "1"
-                  }
+                "lat" : "1.0",
+                "long" : "1.0",
+                "name" : "Castle",
+                "hash" : "#sight",
+                "id" : "1"
                 }
