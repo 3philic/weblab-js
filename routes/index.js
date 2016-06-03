@@ -105,6 +105,15 @@ router.get('/apidoc', function(req, res, next) {
     res.sendFile(path.join(__dirname+'/../doc/Raml/api.html'));
 });
 
+//REST
+/* /locations */
+/* GET locations */
+/* POST locations */
+
+/* /locations/location-id */
+/* DELETE /locations/location-id */
+/* GET /locations/location-id */
+/* PUT /locations/location-id */
 
 //REDIS
 
