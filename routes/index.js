@@ -135,6 +135,7 @@ router.get('/api/locations',function(req, res, next) {
 }, getLocations, function (req, res, next) {
     var locas = req.locations;
     console.log(locas);
+    res.statusCode = 200;
     res.send(locas);
 }
 
@@ -169,9 +170,9 @@ router.delete('/api/locations/:id', function(req, res) {
 /* GET /locations/location-id */
 router.get('/api/locations/:id',function(req, res, next){
   var key = req.params.id;
-  console.log(key);
-  client.get(key, function (err, result) {
-      res.send(JSON.parse(result));
+  locationRepository.getLocation(key, function (err, result){
+    res.statusCode = 200;
+    res.send(result)
   });
 });
 /* PUT /locations/location-id */
