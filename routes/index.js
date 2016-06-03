@@ -139,14 +139,6 @@ router.get('/api/locations',function(req, res, next) {
 }
 
 );
-
-router.get('/api/locations/:id',function(req, res, next){
-  var key = req.params.id;
-  console.log(key);
-  client.get(key, function (err, result) {
-      res.send(JSON.parse(result));
-  });
-});
 /* POST locations */
 router.post('/api/locations', validateRestLocationInput, function(req, res) {
   console.log(req.body);
@@ -163,8 +155,14 @@ router.post('/api/locations', validateRestLocationInput, function(req, res) {
 
 /* /locations/location-id */
 /* DELETE /locations/location-id */
-
 /* GET /locations/location-id */
+router.get('/api/locations/:id',function(req, res, next){
+  var key = req.params.id;
+  console.log(key);
+  client.get(key, function (err, result) {
+      res.send(JSON.parse(result));
+  });
+});
 /* PUT /locations/location-id */
 
 
