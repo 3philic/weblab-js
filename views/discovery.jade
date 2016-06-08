@@ -1,18 +1,24 @@
 extends layout
 
 block content
+  script(type='text/javascript', src='/js/jquery-2.2.3.js')
   script.
-    function something() {
-      
+    jQuery(window).ready(function(){
+      jQuery("#formSearch").submit(function(){
+        return false;
+      });
+              });
+    function clickedSearchButton() {
+      alert("Do search! (Implement per AJAX, when JS is available.)");
     }
   h1= title
-   form(name="search-Location", action="/discovery")
+   form#formSearch(name="search-Location", action="/discovery")
        div.input
         p
            span.label Search
            p
             input(type="text", name="name")
-            button(onclick="something()") Search
+            button#btnSearch(onclick="clickedSearchButton()") Search
        div.actions
            
     div.list
