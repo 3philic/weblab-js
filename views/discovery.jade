@@ -8,8 +8,31 @@ block content
         return false;
       });
               });
+              
     function clickedSearchButton() {
-      alert("Do search! (Implement per AJAX, when JS is available.)");
+      // clear old list items
+      jQuery("#listLocations").html("");
+      
+      // AJAX
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          var json = JSON.parse(xhttp.responseText);
+          //- alert (xhttp.responseText);
+          for (var i = 0; i<json.length; i++) {
+            var location = json[i];
+            var locationHtml = "<h1>" + location["name"] + "</h1>";
+            locationHtml = locationHtml + ("<li class='list'>" + "Latitude = " + location["lat"] + "</li>");
+            locationHtml = locationHtml + ("<li class='list'>" + "Longitude = " + location["long"] + "</li>");
+            locationHtml = locationHtml + ("<li class='list'>" + "Hash = " + location["hash"] + "</li>");
+            var listHtml = "<p></p>" + locationHtml + "<p></p>";
+            
+            jQuery("#listLocations").append(listHtml);
+          }
+        }
+      };
+      xhttp.open("GET", "api/locations", true);
+      xhttp.send();
     }
   h1= title
    form#formSearch(name="search-Location", action="/discovery")
@@ -22,7 +45,7 @@ block content
        div.actions
            
     div.list
-      ul.list 
+      ul#listLocations.list
         for loc in locations
           p.list
             h1= loc.name
