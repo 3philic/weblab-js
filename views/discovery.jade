@@ -7,7 +7,7 @@ block content
       jQuery("#formSearch").submit(function(){
         return false;
       });
-              });
+    });
               
     function clickedSearchButton() {
       // clear old list items
@@ -31,7 +31,10 @@ block content
           }
         }
       };
-      xhttp.open("GET", "api/locations", true);
+      
+      var searchName = jQuery("#inputSearch").val();
+      var requestUrl = "api/locations?name=" + searchName;
+      xhttp.open("GET", requestUrl, true);
       xhttp.send();
     }
   h1= title
@@ -40,7 +43,7 @@ block content
         p
            span.label Search
            p
-            input(type="text", name="name")
+            input#inputSearch(type="text", name="name")
             button#btnSearch(onclick="clickedSearchButton()") Search
        div.actions
            

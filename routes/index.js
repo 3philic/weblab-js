@@ -41,6 +41,10 @@ function getLocations(req, res, next) {
       searchHashtagName = searchName;
     }
 
+    // ensure lower case query parameters
+    searchName = searchName.toLowerCase();
+    searchHashtagName = searchHashtagName.toLowerCase();
+
     locationRepository.getLocations(function (err, result) {
       var allLocations = result;
       var relevantLocations = [];
