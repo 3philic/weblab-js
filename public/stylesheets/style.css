@@ -1,6 +1,6 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
 }
 
 a {
@@ -50,4 +50,17 @@ ul.list li.list {
   padding: 8px;
   display: block;
   margin: 5px;
+}
+
+button {
+  text-align: center;
+  font-size: 12px;
+  min-width: 132px;
+  width: auto;
+  height: auto;
+  line-height: 32px;
+  border-radius: 1px;
+  font-size: 0.9em;
+  background-color: #333;
+  color: #fff;
 }
