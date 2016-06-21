@@ -133,3 +133,16 @@ button:active:before {
 *, *:before, *:after {
   box-sizing: border-box;
 }
+.input {
+  width: 400px;
+}
+#inputSearch {
+  float: left;
+  margin-right: 10px;
+  height: 32px;
+}
+#btnSearch {
+  padding: inherit;
+  display: inline;
+
+}
