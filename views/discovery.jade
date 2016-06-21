@@ -2,59 +2,29 @@ extends layout
 
 block content
   script(type='text/javascript', src='/js/jquery-2.2.3.js')
-  script.
-    jQuery(window).ready(function(){
-      jQuery("#formSearch").submit(function(){
-        return false;
-      });
-    });
-              
-    function clickedSearchButton() {
-      // clear old list items
-      jQuery("#listLocations").html("");
-      
-      // AJAX
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-          var json = JSON.parse(xhttp.responseText);
-          //- alert (xhttp.responseText);
-          for (var i = 0; i<json.length; i++) {
-            var location = json[i];
-            var locationHtml = "<h1>" + location["name"] + "</h1>";
-            locationHtml = locationHtml + ("<li class='list'>" + "Latitude = " + location["lat"] + "</li>");
-            locationHtml = locationHtml + ("<li class='list'>" + "Longitude = " + location["long"] + "</li>");
-            locationHtml = locationHtml + ("<li class='list'>" + "Hash = " + location["hash"] + "</li>");
-            var listHtml = "<p></p>" + locationHtml + "<p></p>";
-            
-            jQuery("#listLocations").append(listHtml);
-          }
-        }
-      };
-      
-      var searchName = jQuery("#inputSearch").val();
-      var requestUrl = "api/locations?name=" + searchName;
-      xhttp.open("GET", requestUrl, true);
-      xhttp.send();
-    }
+  script(type='text/javascript', src="http://maps.googleapis.com/maps/api/js")
+  script(type='text/javascript', src='/javascripts/discovery-view.js')
+  
   h1= title
-   form#formSearch(name="search-Location", action="/discovery")
-       div.input
+    form#formSearch(name="search-Location", action="/discovery")
+      div.input
         p
-           span.label Search
-           p
-            input#inputSearch(type="text", name="name")
-            button#btnSearch(onclick="clickedSearchButton()") Search
-       div.actions
+          span.label Search
+            p
+              input#inputSearch(type="text", name="name")
+              button#btnSearch(onclick="clickedSearchButton()") Search
+            div.actions
            
-    div.list
-      ul#listLocations.list
-        for loc in locations
-          p.list
-            h1= loc.name
-            li.list= "Latitude = "    + loc.lat
-            li.list= "Longitude = "  + loc.long
-            li.list= "Hash = "       + loc.hash
-          p.list
+  div#googleMapContainer(style="width:500px;height:380px;border-color:#282C34;border-style:solid;")
+           
+  div.list
+    ul#listLocations.list
+      for loc in locations
+        p.list
+          h1= loc.name
+          li.list= "Latitude = "    + loc.lat
+          li.list= "Longitude = "  + loc.long
+          li.list= "Hash = "       + loc.hash
+        p.list
         
         
