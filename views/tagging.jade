@@ -6,16 +6,18 @@ block content
   
   form#locationForm(method='post')
     p
-      label latitude: 
+      label Latitude: 
       input#inputLatitude(name='latitude', class='latitudeInput', type='text')
-      label  longitude: 
+    p
+      label  Longitude: 
       input#inputLongitude(name='longitude', class='longitudeInput', type='text')
+    p
       button(id='btnInit') Find my location
     p
-      label name: 
+      label Name: 
       input#inputName(name='name', class='nameInput', type='text')
     p
-      label hashtag: 
+      label Hashtag: 
       input#inputHashtag(name='hashtag', class='hashtagInput', type='text')
   p
     button#btnSubmit Submit

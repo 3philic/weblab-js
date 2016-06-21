@@ -38,6 +38,7 @@ ul.list {
   overflow: auto;
   display: block;
 }
+
 li.list {
   float: none;
   background-color: #fff;
@@ -52,15 +53,83 @@ ul.list li.list {
   margin: 5px;
 }
 
+form {
+  margin-left: 50px;
+  display: block;
+  width: 250px;
+}
+p input {
+  display: block;
+  margin-top: 10px;
+  width: 132px;
+}
+p label {
+  width: 20px;
+}
+
 button {
-  text-align: center;
-  font-size: 12px;
-  min-width: 132px;
-  width: auto;
-  height: auto;
-  line-height: 32px;
-  border-radius: 1px;
-  font-size: 0.9em;
+  position: relative;
+   display: block;
+   padding: 0;
+   min-width: 132px;
+   min-height: 32px;
+   width: auto;
+   height: auto;
+
+   overflow: hidden;
+
+   border-width: 0;
+   outline: none;
+   border-radius: 2px;
+   box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+   background-color: #333;
+   color: #ecf0f1;
+   transition: background-color .3s;
+}
+button:hover, .btn:focus {
+  background-color: #27ae60;
+}
+
+button > * {
+  position: relative;
+}
+
+button span {
+  display: block;
+  padding: 12px 24px;
+}
+
+button:before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 0;
+  padding-top: 0;
+
+  border-radius: 100%;
+
   background-color: #333;
-  color: #fff;
+
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+button:active:before {
+  width: 120%;
+  padding-top: 120%;
+
+  transition: width .2s ease-out, padding-top .2s ease-out;
+}
+
+/* Styles, not important */
+*, *:before, *:after {
+  box-sizing: border-box;
 }
